@@ -1,0 +1,502 @@
+[
+  {
+    "id": "001",
+    "title": "Server outage due to misconfigured ACL",
+    "date": "2026-01-15",
+    "severity": "High",
+    "description": "The main production server went down because access control lists were misconfigured, preventing critical services from starting.",
+    "actions_taken": "Adjusted ACLs, restarted services, monitored uptime for 24 hours.",
+    "outcome": "Resolved with no further impact.",
+    "tags": ["server", "permissions", "outage"]
+  },
+  {
+    "id": "002",
+    "title": "Database connection pool exhaustion",
+    "date": "2026-01-16",
+    "severity": "Critical",
+    "description": "High traffic volume led to the exhaustion of available database connections, causing 500 errors across the site.",
+    "actions_taken": "Increased pool size, implemented aggressive timeout logic.",
+    "outcome": "Site stability restored; permanent fix deployed in v2.4.",
+    "tags": ["database", "scaling", "performance"]
+  },
+  {
+    "id": "003",
+    "title": "SSL Certificate expiration",
+    "date": "2026-01-17",
+    "severity": "Medium",
+    "description": "The public-facing API was unreachable because the SSL certificate expired without triggering a renewal alert.",
+    "actions_taken": "Manually renewed certificate, updated Certbot configuration.",
+    "outcome": "Service restored within 15 minutes.",
+    "tags": ["security", "certificates", "api"]
+  },
+  {
+    "id": "004",
+    "title": "DDoS attack on load balancer",
+    "date": "2026-01-18",
+    "severity": "High",
+    "description": "A distributed denial of service attack targeted the main ingress controller, causing high latency.",
+    "actions_taken": "Enabled Cloudflare under-attack mode, blocked malicious IP ranges.",
+    "outcome": "Traffic normalized after 45 minutes of mitigation.",
+    "tags": ["security", "network", "ddos"]
+  },
+  {
+    "id": "005",
+    "title": "Storage volume capacity reached",
+    "date": "2026-01-19",
+    "severity": "High",
+    "description": "The logging server stopped processing events because the root partition was 100% full.",
+    "actions_taken": "Purged old log files, expanded EBS volume size.",
+    "outcome": "Logging services resumed automatically.",
+    "tags": ["storage", "linux", "logs"]
+  },
+  {
+    "id": "006",
+    "title": "Memory leak in Auth Microservice",
+    "date": "2026-01-20",
+    "severity": "Medium",
+    "description": "Gradual memory consumption increase led to OOM kills every 4 hours in the authentication pod.",
+    "actions_taken": "Profiled heap memory, identified unclosed stream, patched code.",
+    "outcome": "Memory usage stabilized at 200MB.",
+    "tags": ["backend", "memory", "kubernetes"]
+  },
+  {
+    "id": "007",
+    "title": "Stripe Webhook signature failure",
+    "date": "2026-01-21",
+    "severity": "Low",
+    "description": "Payment confirmations failed due to an incorrect secret key update in the environment variables.",
+    "actions_taken": "Updated secret key in Vault, redeployed service.",
+    "outcome": "Replayed missed webhooks to sync transactions.",
+    "tags": ["payment", "api", "config"]
+  },
+  {
+    "id": "008",
+    "title": "Redis Cache eviction surge",
+    "date": "2026-01-22",
+    "severity": "Medium",
+    "description": "Latency increased in the dashboard because Redis began evicting keys frequently.",
+    "actions_taken": "Increased Redis instance memory, switched to volatile-lru policy.",
+    "outcome": "Latency decreased back to <50ms.",
+    "tags": ["cache", "redis", "latency"]
+  },
+  {
+    "id": "009",
+    "title": "DNS propagation delay after migration",
+    "date": "2026-01-23",
+    "severity": "Low",
+    "description": "Users in specific regions reported intermittent connectivity following a nameserver update.",
+    "actions_taken": "Lowered TTL values, verified records with Dig.",
+    "outcome": "Connectivity stabilized globally after 2 hours.",
+    "tags": ["dns", "network", "migration"]
+  },
+  {
+    "id": "010",
+    "title": "Zombie processes on Jenkins worker",
+    "date": "2026-01-24",
+    "severity": "Medium",
+    "description": "CI/CD builds were failing because the worker node reached its maximum process limit.",
+    "actions_taken": "Killed defunct processes, updated cleanup script.",
+    "outcome": "Build pipeline restored to normal operation.",
+    "tags": ["cicd", "jenkins", "linux"]
+  },
+  {
+    "id": "011",
+    "title": "Unauthorized login attempts from unknown IP",
+    "date": "2026-01-25",
+    "severity": "Medium",
+    "description": "Brute force attempts detected on the admin portal originating from multiple proxies.",
+    "actions_taken": "Implemented rate limiting and mandatory MFA for admin accounts.",
+    "outcome": "Attack neutralized; no accounts compromised.",
+    "tags": ["security", "auth", "audit"]
+  },
+  {
+    "id": "012",
+    "title": "S3 Bucket policy leak",
+    "date": "2026-01-26",
+    "severity": "Critical",
+    "description": "An internal data bucket was accidentally set to public read access.",
+    "actions_taken": "Changed bucket policy to private, audited access logs.",
+    "outcome": "No sensitive data was accessed by unauthorized parties.",
+    "tags": ["cloud", "s3", "security"]
+  },
+  {
+    "id": "013",
+    "title": "Kafka Consumer group lag",
+    "date": "2026-01-27",
+    "severity": "Medium",
+    "description": "Data processing fell behind by 2 million records due to a slow consumer process.",
+    "actions_taken": "Increased partition count and added more consumer instances.",
+    "outcome": "Lag cleared in 30 minutes.",
+    "tags": ["kafka", "data", "streaming"]
+  },
+  {
+    "id": "014",
+    "title": "Elasticsearch cluster yellow status",
+    "date": "2026-01-28",
+    "severity": "Medium",
+    "description": "One node failed, leaving unassigned shards in the search cluster.",
+    "actions_taken": "Restarted failed node, forced shard reallocation.",
+    "outcome": "Cluster returned to green status.",
+    "tags": ["search", "elasticsearch", "infrastructure"]
+  },
+  {
+    "id": "015",
+    "title": "Broken CSS on landing page",
+    "date": "2026-01-29",
+    "severity": "Low",
+    "description": "A deployment error caused the minified CSS file to be corrupted.",
+    "actions_taken": "Rolled back to previous stable build.",
+    "outcome": "UI issues resolved within 5 minutes.",
+    "tags": ["frontend", "deployment", "ui"]
+  },
+  {
+    "id": "016",
+    "title": "SMTP relay timeout",
+    "date": "2026-01-30",
+    "severity": "Medium",
+    "description": "Outbound emails (password resets) were being queued but not sent.",
+    "actions_taken": "Verified SMTP credentials, whitelisted new relay IP.",
+    "outcome": "Email queue cleared successfully.",
+    "tags": ["email", "smtp", "communication"]
+  },
+  {
+    "id": "017",
+    "title": "Docker daemon crash",
+    "date": "2026-02-01",
+    "severity": "High",
+    "description": "The Docker service on the staging host crashed due to an incompatible kernel update.",
+    "actions_taken": "Reverted kernel version, restarted Docker.",
+    "outcome": "Staging environment restored.",
+    "tags": ["docker", "devops", "linux"]
+  },
+  {
+    "id": "018",
+    "title": "API Rate limit exceeded for Maps SDK",
+    "date": "2026-02-02",
+    "severity": "Low",
+    "description": "Interactive maps failed to load because the monthly quota was hit early.",
+    "actions_taken": "Upgraded tier in Google Cloud Console.",
+    "outcome": "Maps functionality restored immediately.",
+    "tags": ["api", "frontend", "billing"]
+  },
+  {
+    "id": "019",
+    "title": "PostgreSQL deadlock in transaction",
+    "date": "2026-02-03",
+    "severity": "Medium",
+    "description": "A race condition in the order processing logic caused database deadlocks.",
+    "actions_taken": "Refactored transaction order, optimized index.",
+    "outcome": "Locking issues eliminated.",
+    "tags": ["database", "sql", "performance"]
+  },
+  {
+    "id": "020",
+    "title": "VPN gateway disconnect",
+    "date": "2026-02-04",
+    "severity": "Medium",
+    "description": "Remote employees couldn't access internal resources due to a VPN tunnel collapse.",
+    "actions_taken": "Rebooted VPN gateway, updated firmware.",
+    "outcome": "Stable connectivity for remote staff.",
+    "tags": ["network", "vpn", "remote"]
+  },
+  {
+    "id": "021",
+    "title": "CDN Cache Poisoning",
+    "date": "2026-02-05",
+    "severity": "High",
+    "description": "An attacker manipulated header values to cache incorrect responses globally.",
+    "actions_taken": "Purged CDN cache, implemented header validation.",
+    "outcome": "Correct content served globally.",
+    "tags": ["cdn", "security", "web"]
+  },
+  {
+    "id": "022",
+    "title": "Kubelet service failure",
+    "date": "2026-02-06",
+    "severity": "High",
+    "description": "A node became 'NotReady' because the Kubelet service stopped responding.",
+    "actions_taken": "SSH'd into node, restarted Kubelet, checked systemd logs.",
+    "outcome": "Node rejoined cluster and pods rescheduled.",
+    "tags": ["kubernetes", "infrastructure", "devops"]
+  },
+  {
+    "id": "023",
+    "title": "GitLab Runner disk full",
+    "date": "2026-02-07",
+    "severity": "Low",
+    "description": "Builds were failing due to leftover Docker volumes taking up space.",
+    "actions_taken": "Executed 'docker system prune', automated weekly cleanup.",
+    "outcome": "Disk space reclaimed, CI resumed.",
+    "tags": ["cicd", "gitlab", "storage"]
+  },
+  {
+    "id": "024",
+    "title": "Nginx 502 Bad Gateway",
+    "date": "2026-02-08",
+    "severity": "Medium",
+    "description": "The reverse proxy could not reach the upstream Python application.",
+    "actions_taken": "Restarted Gunicorn workers, adjusted socket permissions.",
+    "outcome": "Web traffic flow restored.",
+    "tags": ["nginx", "proxy", "python"]
+  },
+  {
+    "id": "025",
+    "title": "MongoDB Replica Set split-brain",
+    "date": "2026-02-09",
+    "severity": "High",
+    "description": "Network partition caused two nodes to claim primary status.",
+    "actions_taken": "Re-configured arbitration, forced re-election.",
+    "outcome": "Data consistency maintained, single primary established.",
+    "tags": ["database", "mongodb", "ha"]
+  },
+  {
+    "id": "026",
+    "title": "Frontend JS bundle size spike",
+    "date": "2026-02-10",
+    "severity": "Low",
+    "description": "A new dependency increased the main bundle size by 400%, slowing TTI.",
+    "actions_taken": "Removed dependency, used lightweight alternative.",
+    "outcome": "Page load speed improved.",
+    "tags": ["frontend", "performance", "javascript"]
+  },
+  {
+    "id": "027",
+    "title": "IAM Role permission missing",
+    "date": "2026-02-11",
+    "severity": "Medium",
+    "description": "Lambda function failed to write to DynamoDB due to a missing 'PutItem' permission.",
+    "actions_taken": "Updated IAM policy to include DynamoDB permissions.",
+    "outcome": "Lambda execution succeeded.",
+    "tags": ["cloud", "iam", "aws"]
+  },
+  {
+    "id": "028",
+    "title": "RabbitMQ Queue overflow",
+    "date": "2026-02-12",
+    "severity": "Medium",
+    "description": "Message queue reached 1 million messages, causing high RAM usage.",
+    "actions_taken": "Scaled consumers, purged dead-letter queue.",
+    "outcome": "Queue drained and memory stabilized.",
+    "tags": ["rabbitmq", "messaging", "backend"]
+  },
+  {
+    "id": "029",
+    "title": "SSH Brute force from Botnet",
+    "date": "2026-02-13",
+    "severity": "Low",
+    "description": "High volume of SSH login attempts detected on port 22.",
+    "actions_taken": "Changed SSH port, enabled Fail2Ban.",
+    "outcome": "Unauthorized attempts dropped by 99%.",
+    "tags": ["security", "linux", "network"]
+  },
+  {
+    "id": "030",
+    "title": "Slow Query on Users table",
+    "date": "2026-02-14",
+    "severity": "Medium",
+    "description": "Search by email was taking >2 seconds due to missing index.",
+    "actions_taken": "Added B-Tree index on email column.",
+    "outcome": "Query time reduced to 5ms.",
+    "tags": ["database", "sql", "performance"]
+  },
+  {
+    "id": "031",
+    "title": "Corrupt Cron job script",
+    "date": "2026-02-15",
+    "severity": "Low",
+    "description": "Nightly backups failed because the shell script contained a syntax error.",
+    "actions_taken": "Fixed shell script, ran manual backup.",
+    "outcome": "Backups back on schedule.",
+    "tags": ["automation", "backup", "linux"]
+  },
+  {
+    "id": "032",
+    "title": "Third-party API downtime (Slack)",
+    "date": "2026-02-16",
+    "severity": "Low",
+    "description": "Internal notifications were not appearing in Slack due to Slack API outage.",
+    "actions_taken": "Checked status.slack.com, informed team.",
+    "outcome": "Notifications resumed once Slack fixed the issue.",
+    "tags": ["external", "slack", "api"]
+  },
+  {
+    "id": "033",
+    "title": "Broken Image links in production",
+    "date": "2026-02-17",
+    "severity": "Low",
+    "description": "Asset migration led to incorrect URL paths for user avatars.",
+    "actions_taken": "Ran SQL script to update image paths in DB.",
+    "outcome": "Images displaying correctly.",
+    "tags": ["frontend", "database", "migration"]
+  },
+  {
+    "id": "034",
+    "title": "High CPU on Analytics Engine",
+    "date": "2026-02-18",
+    "severity": "Medium",
+    "description": "An unoptimized regex caused a CPU spike on the processing nodes.",
+    "actions_taken": "Rewrote regex to avoid backtracking, redeployed service.",
+    "outcome": "CPU usage dropped from 95% to 15%.",
+    "tags": ["performance", "backend", "regex"]
+  },
+  {
+    "id": "035",
+    "title": "Firewall blocking internal traffic",
+    "date": "2026-02-19",
+    "severity": "High",
+    "description": "The staging env couldn't talk to the production DB after a security group change.",
+    "actions_taken": "Modified Security Group rules to allow specific CIDR ranges.",
+    "outcome": "Internal communication restored.",
+    "tags": ["network", "security", "cloud"]
+  },
+  {
+    "id": "036",
+    "title": "Node.js EventEmitter leak",
+    "date": "2026-02-20",
+    "severity": "Medium",
+    "description": "Websocket server crashed after 48 hours due to too many listeners.",
+    "actions_taken": "Added 'removeListener' calls, increased MaxListeners temporarily.",
+    "outcome": "Memory growth halted.",
+    "tags": ["nodejs", "memory", "websockets"]
+  },
+  {
+    "id": "037",
+    "title": "Prometheus scraping failure",
+    "date": "2026-02-21",
+    "severity": "Low",
+    "description": "Metrics were missing for the billing service after a port change.",
+    "actions_taken": "Updated Prometheus config to target the correct port.",
+    "outcome": "Monitoring data resumed.",
+    "tags": ["monitoring", "prometheus", "devops"]
+  },
+  {
+    "id": "038",
+    "title": "Invalid JSON in ConfigMap",
+    "date": "2026-02-22",
+    "severity": "Medium",
+    "description": "Pod failed to start because the mounted JSON config was malformed.",
+    "actions_taken": "Corrected JSON syntax in Kubernetes ConfigMap.",
+    "outcome": "Pod initialized successfully.",
+    "tags": ["kubernetes", "config", "json"]
+  },
+  {
+    "id": "039",
+    "title": "Search index lag",
+    "date": "2026-02-23",
+    "severity": "Medium",
+    "description": "New products weren't appearing in search results for 10 minutes.",
+    "actions_taken": "Optimized Elasticsearch refresh interval.",
+    "outcome": "Search results now update within 1 second.",
+    "tags": ["search", "elasticsearch", "data"]
+  },
+  {
+    "id": "040",
+    "title": "Zabbix agent down",
+    "date": "2026-02-24",
+    "severity": "Low",
+    "description": "The monitoring agent on the mail server stopped reporting metrics.",
+    "actions_taken": "Restarted zabbix-agent service, checked connectivity.",
+    "outcome": "Dashboard status returned to normal.",
+    "tags": ["monitoring", "infrastructure", "linux"]
+  },
+  {
+    "id": "041",
+    "title": "Orphaned AWS Snapshots costs",
+    "date": "2026-02-25",
+    "severity": "Low",
+    "description": "Cloud bill spiked due to 500+ unattached EBS snapshots.",
+    "actions_taken": "Ran cleanup script to delete snapshots older than 30 days.",
+    "outcome": "Monthly cost reduced by $200.",
+    "tags": ["cloud", "aws", "cost"]
+  },
+  {
+    "id": "042",
+    "title": "Python version mismatch",
+    "date": "2026-02-26",
+    "severity": "Medium",
+    "description": "The application failed to start because it was using Python 3.8 features on a 3.7 host.",
+    "actions_taken": "Updated Dockerfile to use Python 3.10 image.",
+    "outcome": "Environment consistency achieved.",
+    "tags": ["python", "docker", "devops"]
+  },
+  {
+    "id": "043",
+    "title": "Malformed CSV upload crash",
+    "date": "2026-02-27",
+    "severity": "Medium",
+    "description": "A user uploaded a CSV with special characters that crashed the parser.",
+    "actions_taken": "Added UTF-8 validation and error handling to parser.",
+    "outcome": "System now returns 400 Bad Request instead of crashing.",
+    "tags": ["backend", "bug", "data"]
+  },
+  {
+    "id": "044",
+    "title": "Intermittent Wi-Fi in Office B",
+    "date": "2026-02-28",
+    "severity": "Low",
+    "description": "Staff reported drops in connection during video calls.",
+    "actions_taken": "Performed site survey, moved access point to avoid interference.",
+    "outcome": "Stable Wi-Fi coverage achieved.",
+    "tags": ["network", "hardware", "office"]
+  },
+  {
+    "id": "045",
+    "title": "Jenkins master OOM",
+    "date": "2026-03-01",
+    "severity": "High",
+    "description": "The CI master node ran out of heap space during concurrent builds.",
+    "actions_taken": "Increased JVM heap size to 4GB, optimized build history retention.",
+    "outcome": "Jenkins stability improved.",
+    "tags": ["jenkins", "java", "cicd"]
+  },
+  {
+    "id": "046",
+    "title": "Expired API Key for Twilio",
+    "date": "2026-03-02",
+    "severity": "High",
+    "description": "SMS 2FA messages were not being sent to users.",
+    "actions_taken": "Rotated API keys and updated environment secrets.",
+    "outcome": "SMS delivery resumed.",
+    "tags": ["security", "api", "sms"]
+  },
+  {
+    "id": "047",
+    "title": "BGP Route flapping",
+    "date": "2026-03-03",
+    "severity": "Critical",
+    "description": "Regional ISP issue caused the data center to lose connectivity intermittently.",
+    "actions_taken": "Switched traffic to secondary ISP via BGP priority adjustment.",
+    "outcome": "Traffic stabilized via secondary route.",
+    "tags": ["network", "bgp", "outage"]
+  },
+  {
+    "id": "048",
+    "title": "Grafana Dashboard slow load",
+    "date": "2026-03-04",
+    "severity": "Low",
+    "description": "Dashboards with 30-day time ranges were timing out.",
+    "actions_taken": "Implemented data downsampling in InfluxDB.",
+    "outcome": "Dashboards load in <2 seconds.",
+    "tags": ["monitoring", "grafana", "performance"]
+  },
+  {
+    "id": "049",
+    "title": "Docker image registry error",
+    "date": "2026-03-05",
+    "severity": "Medium",
+    "description": "Unable to pull images due to 'Too Many Requests' from Docker Hub.",
+    "actions_taken": "Configured image pull-through cache and authenticated login.",
+    "outcome": "Deployment delays eliminated.",
+    "tags": ["docker", "devops", "infrastructure"]
+  },
+  {
+    "id": "050",
+    "title": "Logstash parsing error",
+    "date": "2026-03-06",
+    "severity": "Low",
+    "description": "Logs from the new firewall were not being indexed correctly.",
+    "actions_taken": "Updated Grok patterns in Logstash config.",
+    "outcome": "Firewall logs now searchable in Kibana.",
+    "tags": ["logs", "elk", "security"]
+  }
+]
