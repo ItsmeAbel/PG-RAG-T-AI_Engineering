@@ -1,4 +1,4 @@
-# PG-RAG-TC
+# PG-RAG-TC(Production Grade Retrieval-Augmented Generation with Tool Calling)
 A production-style Retrieval-Augmented Generation (RAG) system with tool calling, vector search, and evaluation, designed to minimize hallucinations and operate under real-world constraints.
 
 # Tech stack
