@@ -1,6 +1,6 @@
 # embeddings.py
 from google import genai
-
+from vectorstore.vector_store import FaissVectorStore
 # Initialize client
 client = genai.Client()
 
@@ -25,7 +25,7 @@ def embed_chunks(chunks: list[str]) -> list[list[float]]:
             )
 
             for vec in result.embeddings:
-                embeddings.append(vec)
+                embeddings.append(vec.values)
 
             print(f"✅ Embedded batch {i // batch_size + 1}")
         except Exception as e:

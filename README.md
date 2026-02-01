@@ -5,7 +5,10 @@ A production-style Retrieval-Augmented Generation (RAG) system with tool calling
 - Code: python
 - Api: FASTAPI
 - Framework: Langchain
-- Vector DB: FAISS or chroma
+- Vector DB: FAISS
 - LLM: Gemeni
-- Storage: SQLite and Json
+- Storage: SQLite, Json, Meta
 - Evaluation: Python scripts
+
+# Preliminary Building process
+Retrieve Data -> Chunking -> Embedding -> Embeddings get adding to Vector DB -> RAG -> MCP 
