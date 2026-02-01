@@ -4,29 +4,34 @@ from ingestion.chunking import chunk_json_record
 from embeddings.embeddings import embed_chunks
 from vectorstore.vector_store import FaissVectorStore
 from prompts.search import semantic_search
+from prompts.rag import generate_rag_answer
 
 data = load_json("../data/incidents.json")
 
 all_chunks = []
+embeddings = []
 
 #----------------chunking----------------
 #each record in the json becomes a chunk
-for record in data:
-    chunks = chunk_json_record(record)
-    all_chunks.extend(chunks)
+def main_chunk():
+    for record in data:
+        chunks = chunk_json_record(record)
+        all_chunks.extend(chunks)
 
 
-print(f"Generated {len(all_chunks)} chunks")
-print(all_chunks[:2])
+    print(f"Generated {len(all_chunks)} chunks")
+    print(all_chunks[:2])
 
 #----------Embeddings----------------------
-embeddings = embed_chunks(all_chunks)
+def main_embed():
+    embeddings = embed_chunks(all_chunks)
 
-print("\nSample embedding vector (first 5 values):")
-print(embeddings[:5])
+    print("\nSample embedding vector (first 5 values):")
+    print(embeddings[:5])
 
 
 #----------Vectore Storing-------------
+
 DIM = 3072
 STORE_PATH = "../data/faiss_store"
 
@@ -40,6 +45,7 @@ def build_and_save_store():
     print("✅ Vector store built and saved")
 
 #------search-----
+#Run this to verify vector store query searching. Don't forget to to add load_and_query_store() in the main runner below
 def load_and_query_store():
     
     store = FaissVectorStore(dim=DIM)
@@ -62,25 +68,45 @@ def load_and_query_store():
             print(f"\nRank {r['rank']} | Distance: {r['distance']:.4f}")
             print(r["text"][:400])
 
+#-------------RAG Pipeline------------
+def rag_query(query: str, k: int = 5):
+    store = FaissVectorStore(dim=DIM)
+    store.load(STORE_PATH)
+
+    retrieved = semantic_search(store, query, k)
+
+    print("\n🔍 Retrieved Chunks:")
+    for r in retrieved:
+        print(f"\nRank {r['rank']} | Distance {r['distance']:.4f}")
+        print(r["text"][:300])
+
+    answer = generate_rag_answer(query, retrieved)
+
+    print("\n🤖 RAG Answer:")
+    print(answer)
+
 #-------------Overlapp check-------------------------
 #used of inspecing overlap behavior. if last 10 words of a chunk(i) are the same as first 10 words of chunk(i+1) then overlap works
-for i, chunk in enumerate(all_chunks):
-    words = chunk.split()
+def main_overlap_check():
+    for i, chunk in enumerate(all_chunks):
+        words = chunk.split()
 
-    print(f"\n=== CHUNK {i + 1} ===")
-    print("First 10 words:", " ".join(words[:10]))
-    print("Last 10 words: ", " ".join(words[-10:]))
+        print(f"\n=== CHUNK {i + 1} ===")
+        print("First 10 words:", " ".join(words[:10]))
+        print("Last 10 words: ", " ".join(words[-10:]))
 
 #-------------chunking sanity check-------------------------
-#inspects chunk length distribution
-lengths = [len(chunk.split()) for chunk in all_chunks]
+def main_sanity_check():
 
-print("Min words:", min(lengths))
-print("Max words:", max(lengths))
-print("Avg words:", sum(lengths) / len(lengths))
+    #inspects chunk length distribution
+    lengths = [len(chunk.split()) for chunk in all_chunks]
 
+    print("Min words:", min(lengths))
+    print("Max words:", max(lengths))
+    print("Avg words:", sum(lengths) / len(lengths))
+
+#"Have we ever had a DDOS attack and how was it resolved and what was the outcome?"
 if __name__ == "__main__":
-    
-    # Run anytime to query
-    load_and_query_store()
+    qry = input()
+    rag_query(qry)
 
