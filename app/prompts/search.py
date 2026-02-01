@@ -14,6 +14,6 @@ def embed_query(query: str) -> list[float]:
     return result.embeddings[0].values
 
 
-def semantic_search(store: FaissVectorStore, query: str, k: int = 3):
+def semantic_search(store: FaissVectorStore, query: str, k: int = 5):
     q_vec = embed_query(query)
     return store.search(q_vec, k)
