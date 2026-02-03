@@ -19,28 +19,31 @@ def build_context(retrieved_chunks: list[dict]) -> str:
     return "\n\n".join(context_parts)
 
 
-def generate_rag_answer(query: str, retrieved_chunks: list[dict]) -> str:
-    context = build_context(retrieved_chunks)
+def generate_rag_answer(query, retrieved_chunks, temperature):
+    context = "\n\n".join(
+        f"[Source {i+1}]\n{r['text']}"
+        for i, r in enumerate(retrieved_chunks)
+    )
 
     prompt = f"""
-        You are an assistant with cute and charming personality answering questions using ONLY the provided context.
+    You are a cute and charming assistant answering questions using ONLY the provided context.
+    Answer the question using ONLY the context below.
+    If the answer is not present, say you don't know.
+    Use appropriate emoji sometimes.
+    Seemless answer.
+    Context:
+    {context}
 
-        If the answer is not in the context, say:
-        "I don't have enough information to answer that."
-        Add appropriate emoji sometimes
+    Question:
+    {query}
+    """
 
-        Context:
-        {context}
-
-        Question:
-        {query}
-
-        Answer (include date of the source):
-        """
-
+    # LLM call here (Gemini)
     response = client.models.generate_content(
         model=GEN_MODEL,
-        contents=prompt
+        contents=prompt,
+        config={"temperature": temperature}
     )
 
     return response.text
+
