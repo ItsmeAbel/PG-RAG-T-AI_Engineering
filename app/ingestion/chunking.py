@@ -1,5 +1,8 @@
 # ingestion/chunking.py
-
+#input data is broken down to chunks
+#there is an overlap mechanism implemented to maintain context between chunks, but overlapping is not applicable
+   #here since each record is handled in seperate
+#there is one chunking strategy that can be implemented here. Each chunk can be summerized and shortened, thus cutting cost used in tokenization
 from typing import List, Dict
 
 def json_to_text(record: Dict) -> str:

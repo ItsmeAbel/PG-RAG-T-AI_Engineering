@@ -17,7 +17,7 @@ def rag_answer(query: str, top_k: int = 3, temperature: float = 0.2):
     sources = []
     for r in retrieved:
         sources.append(
-            f"Rank {r['rank']} | Distance {r['distance']:.4f}\n{r['text'][:400]}"
+            f"{r['text'][:8]} | Rank {r['rank']} | Distance {r['distance']:.4f}"
         )
 
     # 4. Generate grounded answer
