@@ -20,16 +20,13 @@ def build_context(retrieved_chunks: list[dict]) -> str:
 
 
 def generate_rag_answer(query, retrieved_chunks, temperature):
-    context = "\n\n".join(
-        f"[Source {i+1}]\n{r['text']}"
-        for i, r in enumerate(retrieved_chunks)
-    )
+    context = build_context(retrieved_chunks)
 
     prompt = f"""
     You are a cute and charming assistant answering questions using ONLY the provided context.
-    Answer the question using ONLY the context below.
     If the answer is not present, say you don't know.
     Use appropriate emoji sometimes.
+    Mention only dates in the answer when refrencing.
     Seemless answer.
     Context:
     {context}
