@@ -4,7 +4,7 @@ from google import genai
 from vectorstore.vector_store import FaissVectorStore
 import streamlit as st
 
-api_key = st.secrets("GEMENI_API_KEY")
+api_key = st.secrets["GEMENI_API_KEY"]
 
 EMBEDDING_MODEL = "gemini-embedding-001"
 
