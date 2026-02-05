@@ -1,9 +1,11 @@
 # embeddings.py
 from google import genai
 from vectorstore.vector_store import FaissVectorStore
+import streamlit as st
 
+api_key = st.secrets("GEMENI_API_KEY")
 # Initialize client
-client = genai.Client()
+client = genai.Client(api_key=api_key)
 
 # Supported Gemini embedding model
 EMBEDDING_MODEL = "gemini-embedding-001"

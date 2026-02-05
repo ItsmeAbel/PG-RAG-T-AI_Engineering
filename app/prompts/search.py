@@ -2,10 +2,13 @@
 import numpy as np
 from google import genai
 from vectorstore.vector_store import FaissVectorStore
+import streamlit as st
+
+api_key = st.secrets("GEMENI_API_KEY")
 
 EMBEDDING_MODEL = "gemini-embedding-001"
 
-client = genai.Client()
+client = genai.Client(api_key=api_key)
 
 def embed_query(query: str) -> list[float]:
     result = client.models.embed_content(
