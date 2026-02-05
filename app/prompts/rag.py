@@ -1,6 +1,9 @@
 from google import genai
+import streamlit as st
 
-client = genai.Client()
+api_key = st.secrets("GEMENI_API_KEY")
+
+client = genai.Client(api_key=api_key)
 
 GEN_MODEL = "gemini-2.5-flash"
 
