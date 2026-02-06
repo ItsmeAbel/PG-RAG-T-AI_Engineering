@@ -1,5 +1,7 @@
 # PG-RAG-TC(Production Grade Retrieval-Augmented Generation)
-A production-style Retrieval-Augmented Generation (RAG) system with chunking, embedding, vector search, and evaluation, designed to minimize hallucinations and operate under real-world constraints. The data used for this project is a json sample data. 
+A production-style Retrieval-Augmented Generation (RAG) system with chunking, embedding, vector search, and evaluation, designed to minimize hallucinations and operate under real-world constraints. The data used for this project is a json sample data.
+
+The web version of the tool can be found here: [text](https://ragincident.streamlit.app/)
 
 # Tech stack
 - Code: python
