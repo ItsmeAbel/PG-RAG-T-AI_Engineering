@@ -44,7 +44,9 @@ st.markdown(
 # ---------- Sidebar ----------
 with st.sidebar:
     st.markdown("## ⚙️ Settings")
+    st.markdown("Top-k: Number of nearst vectors to search from")
     top_k = st.slider("Top-K Chunks", 1, 8, 3)
+    st.markdown("Temprature: Affects the AIs' creativness when presenting answeres. Lower means more focused on the relevant info")
     temperature = st.slider("Temperature", 0.0, 1.0, 0.2)
     st.markdown("---")
     st.markdown(
@@ -55,25 +57,29 @@ with st.sidebar:
         - FAISS semantic search  
         - Retrieval-Augmented Generation (RAG)
             Contact abel97.ag@gmail.com for any inquires.   
+        **Rate Limits:**  
+        This system uses:
+        - Requests per dat(RPD): 20  
+        - Requests per minute(RPM): 5
         """
     )
 
 # ---------- Header ----------
 st.markdown("## 🧠 Incident Intelligence Assistant")
 st.markdown(
-    "Ask questions about historical incident reports and receive grounded, source-based answers."
+    "Ask a question about current issue about the AI uses our historical incident reports to present grounded, source-based solutions."
 )
 
 # ---------- Query Input ----------
 query = st.text_input(
     "🔎 Ask a question",
-    placeholder="e.g. What incidents were related to SSL certificate issues?",
+    placeholder="e.g. We're having a database issue right now",
 )
 
 run = st.button("Run Search", use_container_width=True)
 
 # ---------- Run RAG ----------
-if run and query.strip():
+if (run or query) and query.strip():
     with st.spinner("Retrieving and reasoning..."):
         answer, sources = rag_answer(
             query=query,
