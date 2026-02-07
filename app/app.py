@@ -3,7 +3,7 @@ from retrieval.rag_answerer import rag_answer
 
 # ---------- Page Config ----------
 st.set_page_config(
-    page_title="Incident Intelligence RAG",
+    page_title="Incident Solving RAG",
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -44,9 +44,9 @@ st.markdown(
 # ---------- Sidebar ----------
 with st.sidebar:
     st.markdown("## ⚙️ Settings")
-    st.markdown("Top-k: Number of nearst vectors to search from")
+    st.markdown("Top-k: Number of nearst vectors to be searched")
     top_k = st.slider("Top-K Chunks", 1, 8, 3)
-    st.markdown("Temprature: Affects the AIs' creativness when presenting answeres. Lower means more focused on the relevant info")
+    st.markdown("Temprature: Affects AI creativness when presenting answers")
     temperature = st.slider("Temperature", 0.0, 1.0, 0.2)
     st.markdown("---")
     st.markdown(
@@ -55,17 +55,22 @@ with st.sidebar:
         This system uses:
         - Gemini embeddings  
         - FAISS semantic search  
-        - Retrieval-Augmented Generation (RAG)
-            Contact abel97.ag@gmail.com for any inquires.   
-        **Rate Limits:**  
-        This system uses:
+        - Retrieval-Augmented Generation (RAG)  
+        """
+    )
+    st.markdown(
+        """ 
+        **Rate Limits:** 
         - Requests per dat(RPD): 20  
         - Requests per minute(RPM): 5
+
+            Contact abel97.ag@gmail.com for any inquires. 
         """
     )
 
+
 # ---------- Header ----------
-st.markdown("## 🧠 Incident Intelligence Assistant")
+st.markdown("## 🧠 Incident Solving Assistant")
 st.markdown(
     "Ask a question about current issue about the AI uses our historical incident reports to present grounded, source-based solutions."
 )
