@@ -1,9 +1,8 @@
 from google import genai
 import streamlit as st
-import os
 from tools.monitoring_tool import get_system_metrics
 from tools.retrieval_tool import search_knowledge_base
-from tenacity import retry, stop_after_attempt, wait_random_exponential
+#from tenacity import retry, stop_after_attempt, wait_random_exponential
 api_key = st.secrets["GEMENI_API_KEY"]
 
 client = genai.Client(api_key=api_key)

@@ -1,6 +1,5 @@
 import streamlit as st
 #from retrieval.rag_answerer import rag_answer
-#from retrieval.rag_answerer import rag_answer
 from agent.functionCalling import toolRAG
 
 # ---------- Page Config ----------
