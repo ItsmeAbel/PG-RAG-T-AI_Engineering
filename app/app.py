@@ -1,5 +1,8 @@
 import streamlit as st
+#from retrieval.rag_answerer import rag_answer
 from retrieval.rag_answerer import rag_answer
+from fctest import rndm
+from agent.functionCalling import toolRAG
 
 # ---------- Page Config ----------
 st.set_page_config(
@@ -86,10 +89,10 @@ run = st.button("Run Search", use_container_width=True)
 # ---------- Run RAG ----------
 if (run or query) and query.strip():
     with st.spinner("Retrieving and reasoning..."):
-        answer, sources = rag_answer(
-            query=query,
+        answer, sources = toolRAG(
+            prmpt=query,
             top_k=top_k,
-            temperature=temperature,
+            temperature = temperature
         )
 
     # ---------- Answer ----------
