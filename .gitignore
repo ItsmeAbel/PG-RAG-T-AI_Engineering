@@ -1,2 +1,4 @@
 .env
 .toml
+.streamlit
+app/.streamlit/

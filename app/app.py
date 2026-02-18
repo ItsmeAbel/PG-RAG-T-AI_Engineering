@@ -1,5 +1,6 @@
 import streamlit as st
-#from retrieval.rag_answerer import rag_answer
+
+# from retrieval.rag_answerer import rag_answer
 from agent.functionCalling import toolRAG
 
 # ---------- Page Config ----------
@@ -73,13 +74,15 @@ with st.sidebar:
 # ---------- Header ----------
 st.markdown("## 🧠 Incident Solving Assistant")
 st.markdown(
-    "Ask a question about current issue about the AI uses our historical incident reports to present grounded, source-based solutions."
+    "Ask a questions to this Agentic RAG system. Questions can be about an encountred issue which the AI uses our historical incident reports to find and present grounded, source-based solutions. The system can also present live metrics on system usage\n\n"
+    " ℹ️ Example queries: RAG - 'We're having database issues'. Metrics - 'how are out systems currently?'. Both/Agentic - 'we're having cpu overheating issue'\n\n" \
+    "Fact-check is not a UI trick. It really does fact check!"
 )
 
 # ---------- Query Input ----------
 query = st.text_input(
     "🔎 Ask a question",
-    placeholder="e.g. We're having a database issue right now",
+    placeholder="e.g. We're having a database issue right now or How are our systems looking",
 )
 
 run = st.button("Run Search", use_container_width=True)
@@ -87,15 +90,26 @@ run = st.button("Run Search", use_container_width=True)
 # ---------- Run RAG ----------
 if (run or query) and query.strip():
     with st.spinner("Retrieving and reasoning..."):
-        answer, sources = toolRAG(
-            prmpt=query,
-            top_k=top_k,
-            temperature = temperature
+        answer, sources, status = toolRAG(
+            prmpt=query, top_k=top_k, temperature=temperature
         )
 
     # ---------- Answer ----------
     st.markdown("### ✅ Answer")
     st.markdown(f"<div class='answer-box'>{answer}</div>", unsafe_allow_html=True)
+
+    # If the AI says 'never experienced', we know it's a 'SUPPORTED' negative result.
+    if "never experienced" in answer.lower() and status == "PARTIALLY_SUPPORTED":
+        status = "SUPPORTED"
+    # Display Status with Colors
+    if status == "SUPPORTED":
+        st.success(f"✅ Fact-Check: {status}")
+    elif "PARTIALLY_SUPPORTED" in status.upper():
+        st.warning(f"⚠️ Fact-Check: {status}")
+    elif "NOT_SUPPORTED" in status.upper():
+        st.error(f"❌ Fact-Check: {status}")
+    else:
+        st.info(f"ℹ️ Fact-Check: {status}")
 
     # ---------- Sources ----------
     st.markdown("### 📚 Sources")
