@@ -54,5 +54,5 @@ Hallucination control is used for fact checking the generated respons against th
 
 - To properly the NLI control, the first method (input guard rails) are removed so the response includes some hallucinations on purpose.
 - The fact checker responds with "Supported", "NOT_SUPPORTED", or "UNSUPPORTED". The result is displayed in the frontend below the answer.
-- # OBS: NLI based hallucination control can be less cost friendly since it's doing an additional request to fact check the response
+- ### OBS: NLI based hallucination control can be less cost friendly since it's doing an additional request to fact check the response
   More strategies to be added in the future, but this is good for now. Hallucination control has been tested and works well 👍
