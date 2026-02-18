@@ -25,11 +25,13 @@ class FaissVectorStore:
 
         results = []
         for i, idx in enumerate(indices[0]):
-            results.append({
-                "rank": i + 1,
-                "distance": float(distances[0][i]),
-                "text": self.texts[idx]
-            })
+            results.append(
+                {
+                    "rank": i + 1,
+                    "distance": float(distances[0][i]),
+                    "text": self.texts[idx],
+                }
+            )
         return results
 
     def save(self, path: str):
