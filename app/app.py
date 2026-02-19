@@ -72,11 +72,18 @@ with st.sidebar:
 
 
 # ---------- Header ----------
-st.markdown("## 🧠 Incident Solving Assistant")
+st.markdown("## 🧠 Incident Solving Assistant <span style='font-size:16px; color:gray;'>...and more</span>", unsafe_allow_html=True)
 st.markdown(
-    "Ask a questions to this Agentic RAG system. Questions can be about an encountred issue which the AI uses our historical incident reports to find and present grounded, source-based solutions. The system can also present live metrics on system usage\n\n"
-    " ℹ️ Example queries: RAG - 'We're having database issues'. Metrics - 'how are out systems currently?'. Both/Agentic - 'we're having cpu overheating issue'\n\n" \
-    "Fact-check is not a UI trick. It really does fact check!"
+    """
+**💡 Agentic RAG System:** Ask about encountered issues. The AI uses historical incident reports for **grounded, source-based solutions** , can show **live system metrics** , and **top headlines about AI**.  
+
+**ℹ️ Examples:**  RAG - "We're having database issues" , Metrics - "How are our systems currently?" , Both/Agentic -  "We're having CPU overheating issue"  
+
+**📰 News:** Ask "Any news on AI or RAG?" to get top headlines with links.  
+
+**✅ Fact-checking:** The system truly verifies claims — not just a UI trick.
+""",
+    unsafe_allow_html=True
 )
 
 # ---------- Query Input ----------
