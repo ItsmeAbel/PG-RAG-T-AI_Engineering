@@ -2,6 +2,7 @@ from google import genai
 import streamlit as st
 from tools.monitoring_tool import get_system_metrics
 from tools.retrieval_tool import search_knowledge_base
+from tools.latestAINews import get_top_stories
 
 # from tenacity import retry, stop_after_attempt, wait_random_exponential
 api_key = st.secrets["GEMENI_API_KEY"]
@@ -39,6 +40,13 @@ def get_sys_metr():
     turn_context_log.append(f"LIVE METRICS TOOL OUTPUT: {mtrxResponse}") # Record it for the fact-checker!
     return mtrxResponse
 
+#tool definiation for getting news
+
+def get_news():
+    """ Retrieves news about AI, RAG and AI-engineering"""
+    news = get_top_stories()
+
+    return news
 
 # NLI-based hallucination controll
 def hallucinationCTRL(question: str, hallContext, model_answer):
@@ -99,11 +107,14 @@ def toolRAG(prmpt: str, top_k, temperature: float = 0.2):
     2. If the tool returns 'never experienced', say exactly 'never experienced' similar problem before.
     3. Use dates from the context to reference past incidents.
     4. No guessing or using external knowledge
+
+    If a user asks about news, use the news tool, and present a short summary of stories about ai engineering from the returned context.
+      For every point you make, you must include the sourcein parentheses at the end of the sentence so I can click it.
     
     Be seamless and use emojis! ✨
     """
     # List of tools the AI can call from
-    tools_list = [get_sys_metr, search]
+    tools_list = [get_sys_metr, search, get_news]
 
     # Start the interaction with the model
     chat = client.chats.create(

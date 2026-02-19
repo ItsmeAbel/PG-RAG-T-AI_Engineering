@@ -40,9 +40,10 @@ This was done becuase langchain felt like on overkill for a limited project such
 The goal here is to make the system automatically pick what actions to perform based on user query, and the results from one action can be passed down and used for another action, making the model truly agentic.
 
 - Gemini function calling is used for adding the tools
-- currently, the system can choose between 2 action. Get live system metrics(mock) and/or show step-by-step solution to issues based on historical incidents
+- currently, the system can choose between 3 action. Get live system metrics(mock) and/or show step-by-step solution to issues based on historical incidents
+- The third tool retrieves top news about AI and RAG, with their sources included. This is done using a free public api from Hacker news(angolia).
 - "tenacity" library was used to prevent crashes, and allow timeouts and retries, but that part of the code has been commented out due to inferred response latency.
-  More tools to be added soon ...
+- The tool-calling mechanism is scalable, so more tools can easily be added in the future per necessity.
 
 # phase 3: Hallucination control
 
