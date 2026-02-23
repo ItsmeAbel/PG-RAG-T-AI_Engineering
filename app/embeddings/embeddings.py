@@ -1,16 +1,16 @@
 # embeddings.py
 from google import genai
-from vectorstore.vector_store import FaissVectorStore
 import streamlit as st
 
 api_key = st.secrets["GEMENI_API_KEY"]
 # Initialize client
 client = genai.Client(api_key=api_key)
 
-# Supported Gemini embedding model
+#Gemini embedding model
 EMBEDDING_MODEL = "gemini-embedding-001"
 
 
+#function that can be called to do batch embeddings of chunks
 def embed_chunks(chunks: list[str]) -> list[list[float]]:
     """
     Generate embeddings for a list of text chunks using official Google Gemini SDK.
@@ -18,7 +18,7 @@ def embed_chunks(chunks: list[str]) -> list[list[float]]:
     batch_size = 10
     embeddings = []
 
-    # Gemini allows batch embedding in one call, but we'll do chunk-by-chunk for clarity
+   #uses gemeni model to do batch embedding. Embedds 10 chunks at a time
     for i in range(0, len(chunks), batch_size):
         try:
             batch = chunks[i: i + batch_size]
@@ -30,8 +30,8 @@ def embed_chunks(chunks: list[str]) -> list[list[float]]:
             for vec in result.embeddings:
                 embeddings.append(vec.values)
 
-            print(f"✅ Embedded batch {i // batch_size + 1}")
+            print(f"Embedded batch {i // batch_size + 1}")
         except Exception as e:
-            print(f"❌ Failed to embed chunk {i}: {e}")
+            print(f"Failed to embed chunk {i}: {e}")
 
     return embeddings

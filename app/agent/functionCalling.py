@@ -3,10 +3,10 @@ import streamlit as st
 from tools.monitoring_tool import get_system_metrics
 from tools.retrieval_tool import search_knowledge_base
 from tools.latestAINews import get_top_stories
-
 # from tenacity import retry, stop_after_attempt, wait_random_exponential
-api_key = st.secrets["GEMENI_API_KEY"]
 
+#functionCalling.py acts as the main function and is responsible for all interaction with the GUI
+api_key = st.secrets["GEMENI_API_KEY"]
 client = genai.Client(api_key=api_key)
 GEN_MODEL = "gemini-2.5-flash"
 GEN_MODEL2 = "gemini-2.0-flash-lite"
@@ -26,7 +26,7 @@ def build_context(retrieved_chunks: list[dict]) -> str:
     return "\n\n".join(context_parts)
 
 
-# tool defination to get live metrics
+# tool defination to get the mock live metrics
 def get_sys_metr():
     """Retrieves any current system metrics."""
     print(f"\n[System: Executing get_sys_metr for...]")
@@ -40,12 +40,10 @@ def get_sys_metr():
     turn_context_log.append(f"LIVE METRICS TOOL OUTPUT: {mtrxResponse}") # Record it for the fact-checker!
     return mtrxResponse
 
-#tool definiation for getting news
-
+#simple tool definiation for getting news
 def get_news():
     """ Retrieves news about AI, RAG and AI-engineering"""
     news = get_top_stories()
-
     return news
 
 # NLI-based hallucination controll
@@ -76,13 +74,13 @@ def hallucinationCTRL(question: str, hallContext, model_answer):
 def toolRAG(prmpt: str, top_k, temperature: float = 0.2):
     global retrieved_sources
     global turn_context_log
-    turn_context_log = []  # RESET for this specific question
+    turn_context_log = []  # resets for each specific question
 
     # internal tool for searching vectore store so that top_k can be passed
     def search(query: str):
         """Retrievs information about incidents or issues or historical reports."""
         print(f"\n[System: Executing search for {query}...]")
-        # we tell python we want to affect the global variable outside
+        # we specify global so the variable value is saved globally
         global retrieved_sources
         global context
         ans = search_knowledge_base(query, top_k)
@@ -93,11 +91,11 @@ def toolRAG(prmpt: str, top_k, temperature: float = 0.2):
         ]
 
         context = build_context(ans)
-        turn_context_log.append(f"HISTORICAL RECORDS: {context}") # Record it!
+        turn_context_log.append(f"HISTORICAL RECORDS: {context}")
         return context if context else "never experienced"
 
     # default prompt for the ai context
-    # this "you can sometime guss or use external knowledge" can be added to test out hallucination control
+    #"you can sometime guss or use external knowledge" can be added for testing the hallucination control
     system_prompt = """
     You are a cute and charming assistant 🌸. 
     You can get live system metrics and solve issues.
@@ -113,10 +111,10 @@ def toolRAG(prmpt: str, top_k, temperature: float = 0.2):
     
     Be seamless and use emojis! ✨
     """
-    # List of tools the AI can call from
+    # Specifies tools for the AI
     tools_list = [get_sys_metr, search, get_news]
 
-    # Start the interaction with the model
+    # Starts the interaction with the model
     chat = client.chats.create(
         model=GEN_MODEL,
         config={
@@ -137,7 +135,7 @@ def toolRAG(prmpt: str, top_k, temperature: float = 0.2):
     response = chat.send_message(user_prompt)
     answer = response.text
     print(f"Gemini: {response.text}")
-    # COMBINE all tool outputs into one big verification block
+    # combines all tool outputs into one big verification block
     full_verification_context = "\n".join(turn_context_log)
 
     if len(retrieved_sources) != 0:

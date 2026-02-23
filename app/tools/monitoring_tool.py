@@ -1,5 +1,6 @@
 import random
 
+#mock live metrics data. I was thinking to use a third party API to get the data but there really is no need for that
 def get_system_metrics():
     
     return {
