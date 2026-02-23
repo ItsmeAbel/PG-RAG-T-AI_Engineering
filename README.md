@@ -32,6 +32,7 @@ The web version of the tool can be found here: [ragincident:](https://raginciden
 6. Query & Search: Turn user query into an embedding then do a semantic search that levarages ANN(Aproximate Nearest Neighbour) to find the closest(most similar) vectors in the database.
 7. RAG: Implement a gemeni LLM model with predifined prompt that uses the vector database as context for its answer. The answer recieved is affected by the users choice of top-k and temperature. Top k= amount of nearest neigbours. Temperature = precison
 8. GUI: Use streamlit(or any other method) to implement a simple GUI.
+Final UI:
 ![alt text](Raw_App_Screenshot.png)
 # phase 2: Make the system more Agentic by implementing tool calling
 
