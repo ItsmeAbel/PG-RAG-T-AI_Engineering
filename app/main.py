@@ -11,7 +11,9 @@ data = load_json("../data/incidents.json")
 all_chunks = []
 embeddings = []
 
-
+#main function used during the first steps of building the app.
+#Not used for the actuall app in the final stages
+#can however be used to update the vector store if the input content changes
 # ----------------chunking----------------
 # each record in the json becomes a chunk
 def main_chunk():
@@ -37,7 +39,7 @@ DIM = 3072
 STORE_PATH = "../data/faiss_store"
 
 
-# run this only once to build the vector store, either upon first time running the program or changing the json file
+#build the vector store, either upon first time running the program or changing the json file
 def build_and_save_store():
 
     store = FaissVectorStore(dim=DIM)
@@ -48,7 +50,8 @@ def build_and_save_store():
 
 
 # ------search-----
-# Run this to verify vector store query searching. Don't forget to to add load_and_query_store() in the main runner below
+# used for testing and verifies vector store query searching functionalities. 
+# Add 'load_and_query_store()' in the main runner below to test and verify
 def load_and_query_store():
 
     store = FaissVectorStore(dim=DIM)
@@ -92,7 +95,7 @@ def rag_query(query: str, k: int = 5):
 
 
 # -------------Overlapp check-------------------------
-# used of inspecing overlap behavior. if last 10 words of a chunk(i) are the same as first 10 words of chunk(i+1) then overlap works
+# used for inspecing overlap behavior. if last 10 words of a chunk(i) are the same as first 10 words of chunk(i+1) then overlap works
 def main_overlap_check():
     for i, chunk in enumerate(all_chunks):
         words = chunk.split()
@@ -113,7 +116,7 @@ def main_sanity_check():
     print("Avg words:", sum(lengths) / len(lengths))
 
 
-# "Have we ever had a DDOS attack and how was it resolved and what was the outcome?"
+# Example Query: "Have we ever had a DDOS attack and how was it resolved and what was the outcome?"
 if __name__ == "__main__":
     qry = input()
     rag_query(qry)

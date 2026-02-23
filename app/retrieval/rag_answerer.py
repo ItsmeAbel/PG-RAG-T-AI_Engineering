@@ -7,7 +7,7 @@ import os
 DIM = 3072
 
 # absolute path needed for streamlit
-# Get the directory where THIS file is located
+# Get the directory where this file is located from the OS
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 STORE_PATH = os.path.join(THIS_DIR, "..", "..", "data", "faiss_store")
 
@@ -26,7 +26,7 @@ def rag_answer(query: str, top_k: int = 3, temperature: float = 0.2):
         query=query, retrieved_chunks=retrieved, temperature=temperature
     )
 
-    # Build sources (for UI)
+    # Build sources for UI
     sources = []
     if answer and answer.strip() and "never experienced" not in answer.lower():
         for r in retrieved:
