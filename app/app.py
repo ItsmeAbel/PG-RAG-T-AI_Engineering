@@ -46,9 +46,9 @@ st.markdown(
 # ---------- Sidebar ----------
 with st.sidebar:
     st.markdown("## ⚙️ Settings")
-    st.markdown("Top-k: Number of nearst vectors to be searched")
+    st.markdown("Top-k: Number of nearst vectors to searched from")
     top_k = st.slider("Top-K Chunks", 1, 8, 3)
-    st.markdown("Temprature: Affects AI creativness when presenting answers")
+    st.markdown("Temprature: Affects AI precison in responses. Higher = less precise")
     temperature = st.slider("Temperature", 0.0, 1.0, 0.2)
     st.markdown("---")
     st.markdown(
@@ -77,7 +77,7 @@ st.markdown(
     """
 **💡 Agentic RAG System:** Ask about encountered issues. The AI uses historical incident reports for **grounded, source-based solutions** , can show **live system metrics** , and **top headlines about AI**.  
 
-**ℹ️ Examples:**  RAG - "We're having database issues" , Metrics - "How are our systems currently?" , Both/Agentic -  "We're having CPU overheating issue"  
+**ℹ️ Examples:**  RAG - "We're having database issues" , Metrics - "How are our systems currently?" , Both/Agentic -  "Our users are experiencing delays in the system. What shoould we do?"  
 
 **📰 News:** Ask "Any news on AI or RAG?" to get top headlines with links.  
 
