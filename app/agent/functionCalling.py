@@ -3,9 +3,10 @@ import streamlit as st
 from tools.monitoring_tool import get_system_metrics
 from tools.retrieval_tool import search_knowledge_base
 from tools.latestAINews import get_top_stories
+
 # from tenacity import retry, stop_after_attempt, wait_random_exponential
 
-#functionCalling.py acts as the main function and is responsible for all interaction with the GUI
+# functionCalling.py acts as the main function and is responsible for all interaction with the GUI
 api_key = st.secrets["GEMENI_API_KEY"]
 client = genai.Client(api_key=api_key)
 GEN_MODEL = "gemini-2.5-flash"
@@ -13,6 +14,7 @@ GEN_MODEL2 = "gemini-2.0-flash-lite"
 retrieved_sources = []
 # A global or session-state list to catch all tool outputs in one turn
 turn_context_log = []
+
 
 # builds historical context for the ai response
 def build_context(retrieved_chunks: list[dict]) -> str:
@@ -37,14 +39,18 @@ def get_sys_metr():
         "memory-usage": metrx["memory_usage"],
         "active_users": metrx["active_users"],
     }
-    turn_context_log.append(f"LIVE METRICS TOOL OUTPUT: {mtrxResponse}") # Record it for the fact-checker!
+    turn_context_log.append(
+        f"LIVE METRICS TOOL OUTPUT: {mtrxResponse}"
+    )  # Record it for the fact-checker!
     return mtrxResponse
 
-#simple tool definiation for getting news
+
+# simple tool definiation for getting news
 def get_news():
-    """ Retrieves news about AI, RAG and AI-engineering"""
+    """Retrieves news about AI, RAG and AI-engineering"""
     news = get_top_stories()
     return news
+
 
 # NLI-based hallucination controll
 def hallucinationCTRL(question: str, hallContext, model_answer):
@@ -95,16 +101,17 @@ def toolRAG(prmpt: str, top_k, temperature: float = 0.2):
         return context if context else "never experienced"
 
     # default prompt for the ai context
-    #"you can sometime guss or use external knowledge" can be added for testing the hallucination control
+    # "you can sometime guss or use external knowledge" can be added for testing the hallucination control
     system_prompt = """
     You are a cute and charming assistant 🌸. 
     You can get live system metrics and solve issues.
     
     When you use the 'search' tool:
-    1. Use ONLY the provided context to solve the user's issue step-by-step.
+    1. Use ONLY the provided context to provide a list of possible solutions.
     2. If the tool returns 'never experienced', say exactly 'never experienced' similar problem before.
     3. Use dates from the context to reference past incidents.
     4. No guessing or using external knowledge
+    5. Explain also how the system was affected for each previous incident or solution, and how long and what it took to resolve it.
 
     If a user asks about news, use the news tool, and present a short summary of stories about ai engineering from the returned context.
       For every point you make, you must include the sourcein parentheses at the end of the sentence so I can click it.

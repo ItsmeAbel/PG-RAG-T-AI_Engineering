@@ -94,7 +94,7 @@ def rag_query(query: str, k: int = 5):
     return answer
 
 
-# -------------Overlapp check-------------------------
+# -------------Overlapp check--------------------------------------
 # used for inspecing overlap behavior. if last 10 words of a chunk(i) are the same as first 10 words of chunk(i+1) then overlap works
 def main_overlap_check():
     for i, chunk in enumerate(all_chunks):
