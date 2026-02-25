@@ -75,9 +75,9 @@ with st.sidebar:
 st.markdown("## 🧠 Incident Solving Assistant <span style='font-size:16px; color:gray;'>...and more</span>", unsafe_allow_html=True)
 st.markdown(
     """
-**💡 Agentic RAG System:** Ask about encountered issues. The AI uses historical incident reports for **grounded, source-based solutions** , can show **live system metrics** , and **top headlines about AI**.  
+**💡 Agentic RAG System:** Ask about encountered issues. The AI uses historical incident reports to present **grounded, source-based solutions**. It can analyze **live system metrics** , and even show top headlines related to **AI or RAG**.  
 
-**ℹ️ Examples:**  RAG - "We're having database issues" , Metrics - "How are our systems currently?" , Both/Agentic -  "Our users are experiencing delays in the system. What shoould we do?"  
+**ℹ️ Examples:**  RAG - "We're getting a DDOs attack" , Metrics - "How ia our system currently?" , Both/Agentic -  "Our users are experiencing delays in the system. What shoould we do?"  
 
 **📰 News:** Ask "Any news on AI or RAG?" to get top headlines with links.  
 
